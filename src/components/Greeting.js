@@ -15,69 +15,17 @@ const Greeting = () => {
     }
   }, [dispatch, isFetched]);
 
-  if (isLoading) return <h1 className="blue">... Is Loading</h1>;
+  if (isLoading) return <h1 className="loading">... Is Loading</h1>;
   if (hasError) {
     return (
-      <h1 className="red">
+      <h1 className="error">
         An error has ocured:
         {error}
       </h1>
     );
   }
 
-  return <h1 className="green">{greeting}</h1>;
+  return <h1 className="greeting">{greeting}</h1>;
 };
 
 export default Greeting;
-
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-
-// const Greeting = () => {
-//   const [data, setData] = useState([]);
-//   const [isLoading, setIsLoading] = useState(true);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     // Replace this URL with the endpoint of the public JSON API you want to test
-//     const apiUrl = 'http://localhost:3000/api/messages';
-
-//     axios
-//       .get(apiUrl)
-//       .then((response) => {
-//         console.log('API Response:', response);
-//         setData(response.data);
-//         setIsLoading(false);
-//       })
-//       .catch((error) => {
-//         setError(error);
-//         setIsLoading(false);
-//       });
-//   }, []);
-
-//   if (isLoading) {
-//     return <h1 className="blue">Loading...</h1>;
-//   }
-
-//   if (error) {
-//     return (
-//       <h1 className="red">
-//         An error has occurred:
-//         {error.message}
-//       </h1>
-//     );
-//   }
-
-//   return (
-//     <div>
-//       <h1>Greetings</h1>
-//       <ul>
-//         {data.map((item) => (
-//           <li key={item.id}>{item.message}</li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Greeting;
