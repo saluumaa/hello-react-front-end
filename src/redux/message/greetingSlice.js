@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
+// import axios from 'axios';
 const baseUrl = 'http://localhost:3000/api/messages';
 
 const initialState = {
@@ -7,6 +7,7 @@ const initialState = {
   isLoading: false,
   hasError: false,
   isFetched: false,
+  error: null,
 };
 
 export const fetchGreeting = createAsyncThunk('greeting/fetchGreetings', async () => {
@@ -15,7 +16,7 @@ export const fetchGreeting = createAsyncThunk('greeting/fetchGreetings', async (
     const data = await response.json();
     return data[0].message;
   } catch (error) {
-    throw new Error('Error fetching greeting');
+    throw new Error('Failed to fetch greeting');
   }
 });
 
@@ -33,16 +34,18 @@ const greetingSlice = createSlice({
       const isFetched = true;
       const greeting = action.payload;
       return {
-        ...state, greeting, isFetched, isLoading,
+        ...state, greeting, isFetched, isLoading, error: null,
       };
     });
-    builder.addCase(fetchGreeting.rejected, (state) => {
+    builder.addCase(fetchGreeting.rejected, (state, action) => {
       const isLoading = false;
-      const hasError = true;
+      const error = action.error.message;
+      const hasErroar = true;
       return {
         ...state,
         isLoading,
-        hasError,
+        hasErroar,
+        error,
       };
     });
   },
